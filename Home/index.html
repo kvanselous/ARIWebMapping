@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+    <html>
+
+        <head>
+        
+             <meta name="description" content="LA/CRP 458/558 Leaflet starter file - 2020">
+             <meta charset="utf-8">
+             <meta name="viewport" content="width=device-width">
+             
+      <title>Testing</title>
+
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css">
+      <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+                 crossorigin=""></script> 
+            
+             <!--KVS geoJSON-->    
+            <script src="CedarRapidsOutlets.geojson"></script>
+    <style>
+ 
+    h1 {text-align: center; font-size: 50px}
+    h2 {text-align: center}
+    .center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+} 
+  
+         #map1 {width:50%; height:400px;padding 0;}           
+         #map2 {width:50%; height:400px;padding 0;}    
+         #map3 {width:50%; height:400px;padding 0;}           
+         #map4 {width:50%; height:400px;padding 0;}    
+         #map5 {width:50%; height:400px;padding 0;}           
+         #map6 {width:50%; height:400px;padding 0;}    
+         #map7 {width:50%; height:400px;padding 0;}    
+         </style>
+</head>
+<body>   
+           
+<!--Title-->
+<img src="ARI.jpg" height="200" width="1300">
+<h1><b>Exploration of Alcohol Sales, Crime, Health, Safety, & Densities in Iowa </b> </h1>
+<img src="logonew.jpg" class="center" >
+<!--Maps and Containers-->
+<h2>Alcohol Sales in Iowa</h2>         
+    
+            <div id='map1' class="center"></div>
+    
+    
+    	<h2>Cedar Rapids Alcohol Outlets, Call for Service, & Densities </h2>   
+    
+     <div id='map2' class="center"></div>
+    
+        	<h2>Des Moines Call for Service </h2>   
+    
+      <div id='map3' class="center"></div>
+            
+            <h2>Muscatine Call for Service </h2>   
+    
+      <div id='map4' class="center"></div>
+    
+           <h2>Marshalltown Call for Service </h2>   
+    
+      <div id='map5' class="center"></div>
+    
+         <h2>Burlington Call for Service </h2>   
+    
+      <div id='map6' class="center"></div>
+    
+       <h2>Iowa City Call for Service </h2>   
+    
+      <div id='map7' class="center"></div>
+
+    <script>   
+                    var map1 = L.map('map1').setView([42.1, -93.5], 7);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map1);       
+
+
+                    var map2 = L.map('map2').setView([41.9779, -91.6656], 12);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map2);      
+        
+        
+         var circle = {
+                radius: 2,
+                fillColor: "#FFFFFF",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+                };
+             
+            var CRO =L.geoJSON(CRO, {
+                pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, circle);
+                },
+                onEachFeature: function (feature, layer) {
+                    popupOptions = {maxWidth: 200}; 
+                    layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
+                                    "<br><b>License Number: </b>" + feature.properties.license_nu +
+                                    "<br><b>Classification: </b>" + feature.properties.classifica +
+                                    "<br><b>Premise Type: </b>"+ feature.properties. premise_ty )
+                    }
+                    }) 
+            
+             var CRO_OP =L.geoJSON(CRO, {
+                filter: function(feature, layer) {
+                    if(feature.properities.onpremiseI == 'On-Premise') {
+                        return true;
+                    }
+                },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, circle);
+                },
+                onEachFeature: function (feature, layer) {
+                    popupOptions = {maxWidth: 200}; 
+                    layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
+                                    "<br><b>License Number: </b>" + feature.properties.license_nu +
+                                    "<br><b>Classification: </b>" + feature.properties.classifica +
+                                    "<br><b>Premise Type: </b>"+ feature.properties. premise_ty )
+                    }
+                    })
+                    
+                
+            
+        var overlayMaps = {
+		"Cedar Rapids Licenses": CRO,
+        "On-Premise Licenses": CRO_OP,
+		};			
+
+		L.control.layers(overlayMaps).addTo(map2);	
+
+		             
+                    var map3 = L.map('map3').setView([41.5868, -93.6250], 12);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map3);       
+
+                    var map4 = L.map('map4').setView([41.4245, -91.0432], 12);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map4);     
+        
+        
+              var map5 = L.map('map5').setView([42.0495, -92.9080], 12);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map5);       
+
+                    var map6 = L.map('map6').setView([40.8077, -91.1129], 12);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map6);      
+		             
+            var map7 = L.map('map7').setView([41.6611, -91.5302], 12);
+                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1Ijoia3ZhbnNlbG91cyIsImEiOiJjazZsbHE2NGwwZDdtM2tvNmRjc2N0NHo5In0.h_W_-4R3haPMK-IDBTcL-w' 
+                    }).addTo(map7);      
+		             
+		             
+            </script>
+   </body>
+</html>
