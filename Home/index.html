@@ -16,16 +16,24 @@
             <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
                  crossorigin=""></script> 
             
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+            
+            <!--Load in Heat plugin -->
+            <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+            <script src="https://code.jquery.com/jquery-3.1.0.js"></script>  
+            
             <!--KVS geoJSON-->    
             <script src="CedarRapidsOutlets.geojson"></script>
             <script src="KVSAssess2019_XYTableToPoint.geojson"></script>
             <script src="KVSAssessSales_XYTableToPoint.geojson"></script>
     
-            
+     
                 <style>
  
                     h1 {text-align: center; font-size: 50px}
                     h2 {text-align: center}
+                    h3 {text-align: center}
 
                     .center {
                     display: block;
@@ -54,7 +62,8 @@
         <img src="logonew.jpg" class="center" >
       
         <!--Headings and Maps-->
-        <h2>Alcohol Sales in Iowa By Indivdual Retail Location 2012-2021</h2>         
+        <h2>Alcohol Sales in Iowa By Indivdual Retail Location 2012-2020</h2>      
+        <h3>Visualized Per 1,000 Gallons</h3>
         <div id='map1' class="center"></div>
     
         <h2>Cedar Rapids Alcohol Outlets, Call for Service, & Densities </h2>   
@@ -75,6 +84,9 @@
         <h2>Iowa City Call for Service </h2>   
         <div id='map7' class="center"></div>
 
+        
+
+       
             <script>   
                   
                     //Sales Data Maps
@@ -112,7 +124,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -134,7 +146,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -156,7 +168,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -178,7 +190,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -201,7 +213,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -223,7 +235,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -245,7 +257,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -267,7 +279,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -289,7 +301,7 @@
                             },
                            style: function(feature) {
                             return {
-                            radius: feature.properties.volumesoldgallons/1000,
+                            radius: feature.properties.volumesoldgallons/10000,
                             };
                             } 
                             });
@@ -310,20 +322,6 @@
 
                     L.control.layers(overlayMaps1).addTo(map1);	
 	             
-                
-              //     var sales =L.geoJSON(sales, {
-                //        pointToLayer: function (feature, latlng) {
-                  //          return L.circleMarker(latlng, circle1);
-                    //    },
-                      //  onEachFeature: function (feature, layer) {
-                        //    popupOptions = {maxWidth: 200}; 
-                          //  layer.bindPopup("<b>Store Name: </b>" + feature.properties.storename +  
-                            //"<br><b>Dollar Sales: </b>" + feature.properties.saledollars +
-                    //        "<br><b>Liters: </b>" + feature.properties.volumesoldliters +
-                      //      "<br><b>Galls: </b>"+ feature.properties.volumesoldgallons )
-                    //        }
-                    //    }) .addTo(map1)
-                
                 //Cedar Rapids Maps, Marker Information, Layers, & Layer Control
                     var map2 = L.map('map2').setView([41.9779, -91.6656], 12);
                         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -336,7 +334,7 @@
         
                     var circle = {
                         radius: 2,
-                        fillColor: "#FFFFFF",
+                        fillColor: "#00008B",
                         color: "#000",
                         weight: 1,
                         opacity: 1,
@@ -353,11 +351,58 @@
                             layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
                             "<br><b>License Number: </b>" + feature.properties.license_nu +
                             "<br><b>Classification: </b>" + feature.properties.classifica +
-                            "<br><b>Premise Type: </b>"+ feature.properties. premise_ty )
+                            "<br><b>Premise Type: </b>"+ feature.properties.premise_ty )
                             }
-                        }) 
+                        }) ;
                     
+                     $.getJSON("CedarRapidsOutlets.geojson", function(data) {
+                            var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
+                            var heat = L.heatLayer(coords, {
+                                minOpacity: 0.3, //the minimum opacity the heat will start at
+                                maxZoom: 19, //zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
+                                max: 1.0, //maximum point intensity, 1.0 by default
+                                radius: 25, //radius of each "point" of the heatmap, 25 by default
+                                blur: 15, //amount of blur, 15 by default
+                                gradient: {
+                                  0.2: 'green',
+                                  0.65: 'yellow',
+                                  1: 'red'
+                                }
+                            }).addTo(map2)
+                        });
+
               
+   //                  var CRCFS =L.geoJSON(CRCFS, {
+     //                   pointToLayer: function (feature, latlng) {
+       //                     return L.circleMarker(latlng, circle);
+         //                   },
+           //             onEachFeature: function (feature, layer) {
+             //               popupOptions = {maxWidth: 200}; 
+               //             layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
+                 //           "<br><b>License Number: </b>" + feature.properties.license_nu +
+                   //         "<br><b>Classification: </b>" + feature.properties.classifica +
+                     //       "<br><b>Premise Type: </b>"+ feature.properties.premise_ty )
+                       //     }
+                //        }) 
+                    
+                    
+   //             var CROP= L.geoJSON(CRO, { 
+     //                       filter: function(feature, layer) {
+       //                         return feature.properties.offpremise == "Off-Premise";
+         //                   },
+           //                 pointToLayer: function(feature, latlng) {
+             //               return L.circleMarker(latlng,circle1);
+               //             },
+                 //           onEachFeature: function (feature, layer) {
+                   //         popupOptions = {maxWidth: 200}; 
+                     //       layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
+                       //                     "<br><b>License Number: </b>" + feature.properties.license_nu +
+                         //                   "<br><b>Classification: </b>" + feature.properties.classifica +
+                           //                 "<br><b>Premise Type: </b>"+ feature.properties.premise_ty ) 
+                        //    },
+                          //  }); 
+                                   
+                    
                 
      //               var CROOP =L.geoJSON(CRO, {
        //                 filter: function(feature, layer) {
@@ -377,7 +422,7 @@
             
                     var overlayMaps = {
                         "Cedar Rapids Licenses": CRO,
-                    //    "On-Premise Licenses": CRO_OP,
+                    //    "Heat Map Licenses": heat,
                         };			
 
                     L.control.layers(overlayMaps).addTo(map2);	
