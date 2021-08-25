@@ -27,6 +27,9 @@
             <script src="CedarRapidsOutlets.geojson"></script>
             <script src="KVSAssess2019_XYTableToPoint.geojson"></script>
             <script src="KVSAssessSales_XYTableToPoint.geojson"></script>
+            <script src="CedarRapidsOutlets.geojson"> </script>
+            <script src="cedar_rapids_2018_crime_geoc%20(1).geojson"></script>
+            <script src="Outlets_FeaturesToJSON.geojson"></script>
     
      
                 <style>
@@ -341,8 +344,16 @@
                         fillOpacity: 0.8
                         };
                 
-
-                    var CRO =L.geoJSON(CRO, {
+                var circle3 = {
+                        radius: 1,
+                        fillColor: "#8b0000",
+                        color: "#8b0000",
+                        weight: .5,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                        };
+            
+                    var CRO =L.geoJSON(crout, {
                         pointToLayer: function (feature, latlng) {
                             return L.circleMarker(latlng, circle);
                             },
@@ -354,79 +365,90 @@
                             "<br><b>Premise Type: </b>"+ feature.properties.premise_ty )
                             }
                         }) ;
-                    
-                     $.getJSON("CedarRapidsOutlets.geojson", function(data) {
-                            var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
-                            var heat = L.heatLayer(coords, {
-                                minOpacity: 0.3, //the minimum opacity the heat will start at
-                                maxZoom: 19, //zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
-                                max: 1.0, //maximum point intensity, 1.0 by default
-                                radius: 25, //radius of each "point" of the heatmap, 25 by default
-                                blur: 15, //amount of blur, 15 by default
-                                gradient: {
-                                  0.2: 'green',
-                                  0.65: 'yellow',
-                                  1: 'red'
-                                }
-                            }).addTo(map2)
-                        });
-
-              
-   //                  var CRCFS =L.geoJSON(CRCFS, {
-     //                   pointToLayer: function (feature, latlng) {
-       //                     return L.circleMarker(latlng, circle);
-         //                   },
-           //             onEachFeature: function (feature, layer) {
-             //               popupOptions = {maxWidth: 200}; 
-               //             layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
-                 //           "<br><b>License Number: </b>" + feature.properties.license_nu +
-                   //         "<br><b>Classification: </b>" + feature.properties.classifica +
-                     //       "<br><b>Premise Type: </b>"+ feature.properties.premise_ty )
-                       //     }
-                //        }) 
-                    
-                    
-   //             var CROP= L.geoJSON(CRO, { 
-     //                       filter: function(feature, layer) {
-       //                         return feature.properties.offpremise == "Off-Premise";
-         //                   },
-           //                 pointToLayer: function(feature, latlng) {
-             //               return L.circleMarker(latlng,circle1);
-               //             },
-                 //           onEachFeature: function (feature, layer) {
-                   //         popupOptions = {maxWidth: 200}; 
-                     //       layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
-                       //                     "<br><b>License Number: </b>" + feature.properties.license_nu +
-                         //                   "<br><b>Classification: </b>" + feature.properties.classifica +
-                           //                 "<br><b>Premise Type: </b>"+ feature.properties.premise_ty ) 
-                        //    },
-                          //  }); 
-                                   
-                    
                 
-     //               var CROOP =L.geoJSON(CRO, {
-       //                 filter: function(feature, layer) {
-         //                   return feature.properties.offpremise == "Off-Premise";
-           //                     },
-             //           pointToLayer: function (feature, latlng) {
-               //             return L.circleMarker(latlng, circle);
-                 //           },
-                   //     onEachFeature: function (feature, layer) {
-                     //       popupOptions = {maxWidth: 200}; 
-                       //     layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
-                         //                   "<br><b>License Number: </b>" + feature.properties.license_nu +
-                           //                 "<br><b>Classification: </b>" + feature.properties.classifica +
-                             //               "<br><b>Premise Type: </b>"+ feature.properties. premise_ty )
-                               //             }
-                                 //           })
+                   var CFSCR =L.geoJSON(cfscr, {
+                        pointToLayer: function (feature, latlng) {
+                            return L.circleMarker(latlng, circle3);
+                            },
+                        onEachFeature: function (feature, layer) {
+                            popupOptions = {maxWidth: 200}; 
+                            layer.bindPopup("<b>Call Description: </b>" + feature.properties.call_desc )
+                            }
+                        }) ;
+                    
+    //            var heat1 = $.getJSON("Outlets_FeaturesToJSON.geojson", function(data) {
+      //                      var coords = data.features.map(feat => feat.geometry.coordinates.slice().reverse())
+        //                    var heat = L.heatLayer(coords, {
+          //                      minOpacity: 0.3, //the minimum opacity the heat will start at
+            //                    maxZoom: 19, //zoom level where the points reach maximum intensity (as intensity scales with zoom), equals maxZoom of the map by default
+              //                  max: 1.0, //maximum point intensity, 1.0 by default
+                //                radius: 25, //radius of each "point" of the heatmap, 25 by default
+                  //              blur: 15, //amount of blur, 15 by default
+                    //            gradient: {
+                      //            0.2: 'green',
+                        //          0.65: 'yellow',
+                          //        1: 'red'
+                            //    }
+                        //    })
+                    //    });
+
+
+                    
+                var CROP= L.geoJSON(crout, { 
+                            filter: function(feature, layer) {
+                                return feature.properties.offpremise == "Off-Premise";
+                            },
+                            pointToLayer: function(feature, latlng) {
+                            return L.circleMarker(latlng,circle1);
+                            },
+                            onEachFeature: function (feature, layer) {
+                            popupOptions = {maxWidth: 200}; 
+                            layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
+                                            "<br><b>License Number: </b>" + feature.properties.license_nu +
+                                            "<br><b>Classification: </b>" + feature.properties.classifica +
+                                            "<br><b>Premise Type: </b>"+ feature.properties.premise_ty ) 
+                            },
+                            }); 
+                                           
+                
+                    var CROOP =L.geoJSON(crout, {
+                        filter: function(feature, layer) {
+                            return feature.properties.onpremiseI == "On-Premise";
+                                },
+                        pointToLayer: function (feature, latlng) {
+                            return L.circleMarker(latlng, circle);
+                            },
+                        onEachFeature: function (feature, layer) {
+                            popupOptions = {maxWidth: 200}; 
+                            layer.bindPopup("<b>Address: </b>" + feature.properties.address +  
+                                            "<br><b>License Number: </b>" + feature.properties.license_nu +
+                                            "<br><b>Classification: </b>" + feature.properties.classifica +
+                                            "<br><b>Premise Type: </b>"+ feature.properties. premise_ty )
+                                            }
+                                            })
+                    
+            var OSM = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+   		           attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+    		          maxZoom: 18
+                        });
+                
+              var baseMap = {
+		      "OpenStreetMap": OSM
+                };
             
-                    var overlayMaps = {
+                    var overlaymap2 = {
                         "Cedar Rapids Licenses": CRO,
-                    //    "Heat Map Licenses": heat,
+                        "Cedar Rapids Licenses: Off Premise": CROP,
+                        "Cedar Rapids Licenses: On Premise": CROOP,
+                        "Cedar Rapids Calls For Service": CFSCR,
+                   //     "Heat Map Licenses": heat1,
                         };			
 
-                    L.control.layers(overlayMaps).addTo(map2);	
-	             
+                    L.control.layers(baseMap, overlaymap2).addTo(map2);	
+	     
+                
+        
+                
                     //Des Moines Maps
                     var map3 = L.map('map3').setView([41.5868, -93.6250], 12);
                         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {

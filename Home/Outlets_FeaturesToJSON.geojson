@@ -1,4 +1,4 @@
-Var CROUT = {
+var crout = {
 	"type": "FeatureCollection",
 	"features": [{
 		"type": "Feature",
